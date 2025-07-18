@@ -16,7 +16,7 @@ This project is a simple web application for encrypting and decrypting messages 
 ## Folder Structure
 
 ```
-kp/
+Hybrid-Cipher-Web-App/
 ├── app.py
 ├── requirements.txt
 └── templates/
@@ -36,17 +36,24 @@ kp/
 
 1. **Clone or download this repository.**
 
-2. **Install dependencies:**
+   ```bash
+    git clone https://github.com/shakiliitju/Hybrid-Cipher-Web-App
+    .git
+    cd Hybrid-Cipher-Web-App
+    pip install flask flask-cors
+    ```
+
+3. **Install dependencies:**
     ```
     pip install -r requirements.txt
     ```
 
-3. **Run the Flask backend:**
+4. **Run the Flask backend:**
     ```
     python app.py
     ```
 
-4. **Open the web app:**
+5. **Open the web app:**
     - Visit [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your browser.
 
 ---
