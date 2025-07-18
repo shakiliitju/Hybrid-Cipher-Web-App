@@ -2,11 +2,10 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import string
 
-# Make sure the folder is named 'templates', not 'template'
+
 app = Flask(__name__, template_folder='templates')
 CORS(app)
 
-# --- Hybrid Cipher Logic ---
 
 def generateKey(string, key): 
     key = list(key) 
@@ -25,7 +24,7 @@ def vigenereEncrypt(text, key):
             x += ord('A')
             cipher_text.append(chr(x))
         else:
-            cipher_text.append(text[i])  # keep non-letters as is
+            cipher_text.append(text[i]) 
     return "".join(cipher_text) 
 
 def vigenereDecrypt(cipher_text, key): 
@@ -36,7 +35,7 @@ def vigenereDecrypt(cipher_text, key):
             x += ord('A')
             orig_text.append(chr(x))
         else:
-            orig_text.append(cipher_text[i])  # keep non-letters as is
+            orig_text.append(cipher_text[i]) 
     return "".join(orig_text) 
 
 polybius_square = {
@@ -86,7 +85,7 @@ def hybridDecrypt(cipher_text, key):
     decrypted = vigenereDecrypt(vigenere_encrypted, vigenere_key)
     return decrypted
 
-# --- API Endpoints ---
+
 
 @app.route('/')
 def home():
