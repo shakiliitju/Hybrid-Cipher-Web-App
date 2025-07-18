@@ -88,4 +88,4 @@ Hybrid-Cipher-Web-App/
 
 ## License
 
-This project
+MIT License
