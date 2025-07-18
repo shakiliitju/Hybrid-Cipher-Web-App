@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hybrid Cipher</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #fff;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 32px 28px 24px 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+        }
+        h2 {
+            text-align: center;
+            color: #2a3b4c;
+            margin-bottom: 24px;
+        }
+        label {
+            font-weight: 500;
+            color: #2a3b4c;
+        }
+        input, textarea {
+            width: 100%;
+            margin-bottom: 16px;
+            padding: 10px;
+            border: 1px solid #cfd8dc;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: #f9fafb;
+            transition: border 0.2s;
+        }
+        input:focus, textarea:focus {
+            border: 1.5px solid #1976d2;
+            outline: none;
+            background: #fff;
+        }
+        .button-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            flex: 1;
+            padding: 10px 0;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            background: #1976d2;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #125ea8;
+        }
+        .result {
+            margin-top: 18px;
+            font-weight: bold;
+            color: #1976d2;
+            word-break: break-all;
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 6px;
+            min-height: 28px;
+        }
+        .error {
+            color: #d32f2f;
+            background: #ffebee;
+            border: 1px solid #ffcdd2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Hybrid Cipher (Vigenère + Polybius)</h2>
+        <label for="message">Message / Cipher Text:</label>
+        <textarea id="message" rows="2" placeholder="Enter your message or cipher text here"></textarea>
+        <label for="key">Key:</label>
+        <input id="key" type="text" placeholder="Enter encryption key" />
+        <div class="button-row">
+            <button onclick="encrypt()">Encrypt</button>
+            <button onclick="decrypt()">Decrypt</button>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+    <script>
+        function showResult(text, isError = false) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerText = text;
+            if (isError) {
+                resultDiv.classList.add('error');
+            } else {
+                resultDiv.classList.remove('error');
+            }
+        }
+
+        async function encrypt() {
+            const message = document.getElementById('message').value.trim();
+            const key = document.getElementById('key').value.trim();
+            if (!message || !key) {
+                showResult("Please enter both message and key.", true);
+                return;
+            }
+            showResult("Encrypting...");
+            try {
+                const res = await fetch('http://127.0.0.1:5000/encrypt', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message, key})
+                });
+                if (!res.ok) throw new Error("Server error");
+                const data = await res.json();
+                showResult("Encrypted: " + data.encrypted);
+            } catch (err) {
+                showResult("Encryption failed. Is the backend running?", true);
+            }
+        }
+
+        async function decrypt() {
+            const cipher = document.getElementById('message').value.trim();
+            const key = document.getElementById('key').value.trim();
+            if (!cipher || !key) {
+                showResult("Please enter both cipher text and key.", true);
+                return;
+            }
+            showResult("Decrypting...");
+            try {
+                const res = await fetch('http://127.0.0.1:5000/decrypt', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({cipher, key})
+                });
+                if (!res.ok) throw new Error("Server error");
+                const data = await res.json();
+                showResult("Decrypted: " + data.decrypted);
+            } catch (err) {
+                showResult("Decryption failed. Is the backend running?", true);
+            }
+        }
+    </script>
+</body>
+</html>
