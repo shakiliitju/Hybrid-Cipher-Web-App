@@ -2,6 +2,9 @@
 
 This project is a simple web application for encrypting and decrypting messages using a hybrid of the Vigenère and Polybius ciphers. It features a Python Flask backend and a modern HTML/CSS/JavaScript frontend.
 
+![App Screenshot](./images/1.png)
+*Screenshot of the Hybrid Cipher Web Application*
+
 ---
 
 ## Features
@@ -63,6 +66,13 @@ Hybrid-Cipher-Web-App/
 - Enter your message and key in the web form.
 - Click **Encrypt** to get the cipher text.
 - Paste the cipher text and key, then click **Decrypt** to recover your original message.
+
+### Example:
+![Encryption Example](./images/2.png)
+*Example of encrypting "defend the east wall in the castle" with key "SECRET"*
+
+![Decryption Example](./images/3.png)
+*Example of decrypting the cipher text back to original message*
 
 ---
 
